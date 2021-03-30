@@ -1,0 +1,17 @@
+{
+	"compilerOptions": {
+		"baseUrl": "./",
+		"paths": {
+			"containers/*": ["src/containers/*"],
+			"helpers/*": ["src/helpers/*"],
+			"views/*": ["src/views/*"],
+			"scss/*": ["src/scss/*"],
+			"assets/*": ["src/assets/*"],
+			"config": ["src/config"],
+			"@api/*": ["src/api/*"],
+			"@helpers/*": ["src/helpers/*"],
+			"@hooks/*": ["src/hooks/*"],
+			"@services/*": ["src/services/*"]
+		}
+	}
+}

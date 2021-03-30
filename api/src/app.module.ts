@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
 
 import { ErrorModule } from './error/error.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { ErrorModule } from './error/error.module';
       synchronize: true,
     }),
     ErrorModule,
+    UserModule,
   ],
 })
 export class AppModule {

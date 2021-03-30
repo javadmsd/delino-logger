@@ -4,6 +4,8 @@ import { Repository, Connection } from 'typeorm';
 import { CreateErrorDto } from './create-error.dto';
 
 import { Error } from './error.entity';
+import { translate } from './error.helper';
+import { ErrorStackInterface } from './error.interface';
 
 @Injectable()
 export class ErrorService {
@@ -19,8 +21,16 @@ export class ErrorService {
     return this.repository.find();
   }
 
-  findOne(id: string): Promise<Error> {
-    return this.repository.findOne(id);
+  async findOne(id: string): Promise<ErrorStackInterface> {
+    const error = await this.repository.findOne(id);
+
+    let match;
+    if ((match = /\((http.*?)\)/i.exec(error.stack))) {
+      const sourceUrl = match[1];
+      const result = await translate(sourceUrl);
+      return { ...error, ...result };
+    }
+    return { ...error, orginalFile: '', orginalLines: [] };
   }
 
   async create(createErrorDto: CreateErrorDto): Promise<any> {

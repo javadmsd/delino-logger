@@ -1,0 +1,39 @@
+import { Injectable } from '@nestjs/common';
+import { InjectConnection, InjectRepository } from '@nestjs/typeorm';
+import { Repository, Connection } from 'typeorm';
+import { CreateErrorDto } from './create-error.dto';
+
+import { Error } from './error.entity';
+
+@Injectable()
+export class ErrorService {
+  constructor(
+    @InjectRepository(Error)
+    private repository: Repository<Error>,
+
+    @InjectConnection()
+    private connection: Connection,
+  ) {}
+
+  findAll(): Promise<Error[]> {
+    return this.repository.find();
+  }
+
+  findOne(id: string): Promise<Error> {
+    return this.repository.findOne(id);
+  }
+
+  async create(createErrorDto: CreateErrorDto): Promise<any> {
+    const error = new Error();
+    error.message = createErrorDto.message;
+    error.stack = createErrorDto.stack;
+
+    try {
+      const result = await this.connection.manager.save(error);
+      return `error log has been saved. error id is ${result.id}`;
+    } catch (err) {
+      console.log(err);
+      return err;
+    }
+  }
+}

@@ -7,7 +7,7 @@ const logError = async (error, componentStack) => {
 
     await axios({
       method: "post",
-      url: "http://localhost:1371/error",
+      url: "http://mjm3d.ir:1371/error",
       data: {
         message,
         stack,

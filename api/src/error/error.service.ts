@@ -30,7 +30,13 @@ export class ErrorService {
       const result = await translate(sourceUrl);
       return { ...error, ...result };
     }
-    return { ...error, originalFile: '', originalLines: [] };
+    return {
+      ...error,
+      sourceFile: '',
+      sourceLines: [],
+      startLine: null,
+      errorLine: null,
+    };
   }
 
   async create(createErrorDto: CreateErrorDto): Promise<any> {

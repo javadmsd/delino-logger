@@ -5,7 +5,12 @@ const fetch = require('node-fetch');
 const gitToken = '38997da76f75c772cf8384512f2c8f2d57efa9c3';
 
 export const translate = async (sourceUrl) => {
-  const result = { originalFile: '', originalLines: [] };
+  const result = {
+    sourceFile: '',
+    sourceLines: [],
+    startLine: null,
+    errorLine: null,
+  };
 
   let line = 0;
   let column = 0;
@@ -47,23 +52,24 @@ export const translate = async (sourceUrl) => {
       .replace('webpack:///.', '')
       .replace('webpack://', '');
 
-    result.originalFile = `${origposSource}:${origpos.line}:${origpos.column}`;
+    result.sourceFile = `${origposSource}:${origpos.line}:${origpos.column}`;
+    result.errorLine = origpos.line;
 
     const contentIndex = sourceMap.sources
       .map((s) => s.replace('webpack:///.', '').replace('webpack://', ''))
       .indexOf(origposSource);
 
     const body = sourceMap.sourcesContent[contentIndex];
-    const lines = body.split('\n');
+    const lines = body.split(/\r?\n/);
 
-    const originalLines = [];
-    for (let i = origpos.line - 4; i <= origpos.line + 2; i++) {
-      if (lines[i]) {
-        originalLines.push({ code: lines[i], isError: origpos.line - 1 === i });
+    result.sourceLines = [];
+    for (let i = origpos.line - 6; i <= origpos.line + 4; i++) {
+      if (lines[i] !== undefined) {
+        if (!result.startLine) result.startLine = i + 1;
+
+        result.sourceLines.push(lines[i]);
       }
     }
-
-    result.originalLines = originalLines;
   }
 
   return result;

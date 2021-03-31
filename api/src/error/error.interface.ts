@@ -6,6 +6,8 @@ export interface ErrorInterface {
 export interface ErrorStackInterface {
   message: string;
   stack: string;
-  originalFile: string;
-  originalLines: Array<any>;
+  sourceFile: string;
+  sourceLines: Array<string>;
+  startLine: number | null;
+  errorLine: number | null;
 }

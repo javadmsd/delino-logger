@@ -8,52 +8,43 @@ import {
 	CDataTable,
 	CRow,
 	CPagination,
-	CButton,
 	CInputCheckbox,
 } from '@coreui/react';
-import { fetchAccountList } from '@api/account';
-import AddOrderModal from 'views/order/add/Modal';
-import { immediateToast } from 'izitoast-react';
-import AddAccountModal from '../add/Modal';
+import { fetchErrorList, fetchErrorInfo } from 'api/error';
 
 const itemsPerPage = 20;
 
 const fields = [
 	{
-		key: 'check',
-		label: '#',
+		key: 'id',
+		label: 'id',
 		filter: false,
 		sorter: false,
 		_style: { width: '30px' },
 	},
-	{ key: 'name', label: 'نام' },
-	{ key: 'broker', label: 'کارگزاری' },
-	{ key: 'username', label: 'یوزر' },
-	{ key: 'password', label: 'پسورد' },
-	{ key: 'customers', label: 'مشتری' },
+	{ key: 'message', label: 'message' },
 ];
 
-const AccountList = () => {
+const ErrorList = () => {
 	const [data, setData] = useState(null);
 	const [selected, setSelected] = useState({});
 	const [dataCount, setDataCount] = useState(0);
 	const [page, setPage] = useState(1);
-	const [showAddAccountModal, setShowAddAccountModal] = useState(false);
-	const [showAddOrderModal, setShowAddOrderModal] = useState(false);
 
 	const getList = useCallback(
 		async activePage => {
 			try {
-				const result = await fetchAccountList(activePage, itemsPerPage);
-				setData(result.data);
+				const result = await fetchErrorList(activePage, itemsPerPage);
+				setData(result);
 
 				const selectData = {};
-				result.data.forEach(r => {
+				result.forEach(r => {
 					selectData[r.id] = false;
 				});
 				setSelected(selectData);
 
-				if (result.count !== dataCount) setDataCount(result.count);
+				// if (result.count !== dataCount)
+				setDataCount(result.length);
 			} catch (e) {
 				setData([]);
 				setSelected({});
@@ -66,23 +57,14 @@ const AccountList = () => {
 		getList(page);
 	}, []);
 
-	const toggleAddAccountModal = (update = false) => {
-		if (update) getList(1);
-		setShowAddAccountModal(!showAddAccountModal);
-	};
-
-	const toggleAddOrderModal = () => {
-		if (!Object.values(selected).find(s => s === true)) {
-			immediateToast('warning', {
-				message: 'اکانتی انتخاب نشده است',
-			});
-		} else {
-			setShowAddOrderModal(!showAddOrderModal);
-		}
-	};
-
-	const onSelected = useCallback(id => {
+	const onSelected = useCallback(async id => {
 		console.log(id);
+		try {
+			const result = await fetchErrorInfo(id);
+			console.log(result);
+		} catch (e) {
+			console.log(e);
+		}
 		setSelected(d => ({ ...d, [id]: !d[id] }));
 	}, []);
 
@@ -91,28 +73,7 @@ const AccountList = () => {
 			<CRow>
 				<CCol xs='12' lg='12'>
 					<CCard>
-						<CCardHeader>
-							لیست اکانت‌ها{' '}
-							<div className='card-header-actions'>
-								<CButton
-									className='ml-2 mr-2'
-									size='sm'
-									color='primary'
-									onClick={toggleAddOrderModal}
-								>
-									ثبت سفارش
-								</CButton>
-
-								<CButton
-									size='sm'
-									color='info'
-									variant='outline'
-									onClick={toggleAddAccountModal}
-								>
-									افزودن اکانت جدید
-								</CButton>
-							</div>
-						</CCardHeader>
+						<CCardHeader>لیست خطاها </CCardHeader>
 						<CCardBody>
 							<CDataTable
 								items={data}
@@ -166,15 +127,8 @@ const AccountList = () => {
 					</CCard>
 				</CCol>
 			</CRow>
-
-			<AddAccountModal
-				show={showAddAccountModal}
-				toggle={toggleAddAccountModal}
-			/>
-
-			<AddOrderModal show={showAddOrderModal} toggle={toggleAddOrderModal} />
 		</>
 	);
 };
 
-export default AccountList;
+export default ErrorList;

@@ -11,7 +11,7 @@ const TheFooter = () => {
 			</div> */}
 			<div className='mfs-auto'>
 				<span className='mr-1'>Powered by</span>
-				<strong>Jaigahe Bartar Team</strong>
+				<strong>Delino Team</strong>
 			</div>
 		</CFooter>
 	);

@@ -1,17 +1,25 @@
+import { userLogin } from 'api/auth';
 import { AUTH_LOGGED_IN, AUTH_LOG_OUT } from './actionTypes';
-import { fetchUserProfile } from '../../api/user';
-import { userLogin } from '../../api/auth';
+// import { fetchUserProfile } from 'api/user';
 
 export const loginAction = (
 	username,
 	password,
 	callback = () => {},
 ) => dispatch => {
+	// {id, fullname, role}
 	userLogin(username, password)
-		.then(({ id, fullname, role }) => {
+		.then(() => {
 			dispatch({
 				type: AUTH_LOGGED_IN,
-				payload: { profile: { id, username, fullname, role } },
+				payload: {
+					profile: {
+						id: 1,
+						fullname: 'admin',
+						username: 'admin',
+						role: 'admin',
+					},
+				},
 			});
 
 			callback();
@@ -20,16 +28,18 @@ export const loginAction = (
 };
 
 export const fetchUserAction = (callback = () => {}) => dispatch => {
-	fetchUserProfile()
-		.then(({ id, fullname, username, role }) => {
-			dispatch({
-				type: AUTH_LOGGED_IN,
-				payload: { profile: { id, fullname, username, role } },
-			});
+	// fetchUserProfile()
+	// 	.then(({ id, fullname, username, role }) => {
+	dispatch({
+		type: AUTH_LOGGED_IN,
+		payload: {
+			profile: { id: 1, fullname: 'admin', username: 'admin', role: 'admin' },
+		},
+	});
 
-			callback();
-		})
-		.catch(callback);
+	callback();
+	// })
+	// .catch(callback);
 };
 
 export const authLogoutAction = () => dispatch => {

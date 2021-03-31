@@ -8,10 +8,9 @@
 			"scss/*": ["src/scss/*"],
 			"assets/*": ["src/assets/*"],
 			"config": ["src/config"],
-			"@api/*": ["src/api/*"],
-			"@helpers/*": ["src/helpers/*"],
-			"@hooks/*": ["src/hooks/*"],
-			"@services/*": ["src/services/*"]
+			"api/*": ["src/api/*"],
+			"hooks/*": ["src/hooks/*"],
+			"services/*": ["src/services/*"]
 		}
 	}
 }

@@ -12,7 +12,7 @@ import {
 	CSidebarNavItem,
 } from '@coreui/react';
 
-import { setShowSidebar } from '@services/app/actions';
+import { setShowSidebar } from 'services/app/actions';
 
 // sidebar nav config
 import navigation from './_nav';
@@ -24,7 +24,7 @@ const TheSidebar = () => {
 	return (
 		<CSidebar show={show} onShowChange={val => dispatch(setShowSidebar(val))}>
 			<CSidebarBrand className='d-md-down-none' to='/'>
-				Jaigahe Bartar
+				Logger Panel
 			</CSidebarBrand>
 			<CSidebarNav>
 				<CCreateElement

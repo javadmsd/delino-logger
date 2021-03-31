@@ -741,7 +741,7 @@ module.exports = function (webpackEnv) {
         new webpack.SourceMapDevToolPlugin({
           filename: "../sourcemaps/[file].map",
           append:
-            "\n//# sourceMappingURL=https://api.github.com/repos/javadmsd/delino-bug/contents/sourcemaps/[file].map",
+            "\n//# sourceMappingURL=https://api.github.com/repos/javadmsd/delino-logger/contents/bug/sourcemaps/[file].map",
           fileContext: "static/js",
         }),
     ].filter(Boolean),

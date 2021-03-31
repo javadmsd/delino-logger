@@ -21,10 +21,9 @@
 		"scss": "${workspaceRoot}/src/scss",
 		"assets": "${workspaceRoot}/src/assets",
 		"config": "${workspaceRoot}/src/config",
-		"@api": "${workspaceRoot}/src/api",
-		"@helpers": "${workspaceRoot}/src/helpers",
-		"@hooks": "${workspaceRoot}/src/hooks",
-		"@services": "${workspaceRoot}/src/services"
+		"api": "${workspaceRoot}/src/api",
+		"hooks": "${workspaceRoot}/src/hooks",
+		"services": "${workspaceRoot}/src/services"
 	},
 
 	"[jsonc]": {

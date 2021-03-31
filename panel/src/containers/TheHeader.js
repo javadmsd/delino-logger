@@ -8,7 +8,7 @@ import {
 	CHeaderNavItem,
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
-import { setShowSidebar } from '@services/app/actions';
+import { setShowSidebar } from 'services/app/actions';
 
 const TheHeader = () => {
 	const dispatch = useDispatch();

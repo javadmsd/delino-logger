@@ -17,7 +17,7 @@ import {
 	CRow,
 } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
-import { loginAction } from '@services/user/actions';
+import { loginAction } from 'services/user/actions';
 
 const Login = ({ history }) => {
 	const dispatch = useDispatch();
@@ -32,7 +32,7 @@ const Login = ({ history }) => {
 			loginAction(username, password, err => {
 				if (err) {
 					immediateToast('error', {
-						message: err._errors[0],
+						message: 'Forbidden',
 					});
 				} else {
 					history.replace('/');

@@ -4,8 +4,8 @@ import './scss/style.scss';
 
 import { useDispatch } from 'react-redux';
 
-import { getToken } from '@api';
-import { fetchUserAction } from '@services/user/actions';
+import { getToken } from 'api';
+import { fetchUserAction } from 'services/user/actions';
 import PrivateRoute from './PrivateRoute';
 
 const Spinner = (
